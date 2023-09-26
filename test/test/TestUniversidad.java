@@ -62,5 +62,62 @@ public class TestUniversidad {
 		assertFalse(ingresoElAlumno);
 		assertEquals(numeroEsperado, unlam.getCantidadDeAlumnos());
 	}
+	
+	@Test
+    public void queSePuedaIngresarProfe() {
+        // PREPARACION
+        String nombre = "UNLAM", nombreProfe = "Diego", apellidoProfe = "Diaz";
+        Integer legajoProfe = 444;
+        // EJECUCION
+        Universidad unlam = new Universidad(nombre);
+        Profe profesor = new Profe(nombreProfe, apellidoProfe, legajoProfe);
+        Boolean ingresoElProfe;
+
+        ingresoElProfe = unlam.ingresarProfesor(profesor);
+        // VALIDACION
+        assertTrue(ingresoElProfe);
+
+    }
+@Test
+    public void queNoSePuedaIngresarProfesoresConMismoDNI() {
+        // PREPARACION
+
+        String nombre = "UNLAM", nombreProfe = "Diego", apellidoProfe = "Diaz";
+        Integer dni = 444, numeroEsperado = 1;
+
+        // EJECUCION
+
+        Universidad unlam = new Universidad(nombre);
+        Profe profesor = new Profe(nombreProfe, apellidoProfe, dni);
+        Profe profesor2 = new Profe(nombreProfe, apellidoProfe, dni);
+        Boolean ingresoElProfe;
+
+        unlam.ingresarProfesor(profesor);
+        ingresoElProfe = unlam.ingresarProfesor(profesor2);
+
+        // VALIDACION
+
+        assertFalse(ingresoElProfe);
+        assertEquals(numeroEsperado, unlam.getCantidadDeProfesores());
+    }
+@Test
+    public void queSePuedaIngresarMateria() {
+        // PREPARACION
+
+        String nombre = "UNLAM", nombreMateria = "PB2";
+        Integer codigoMateria = 88;
+
+        // EJECUCION
+
+        Universidad unlam = new Universidad(nombre);
+        Materia materia = new Materia(nombreMateria, codigoMateria);
+        Boolean ingresoLaMateria;
+
+        ingresoLaMateria = unlam.ingresarMateria(materia);
+
+        // VALIDACION
+
+        assertTrue(ingresoLaMateria);
+    }
 
 }
