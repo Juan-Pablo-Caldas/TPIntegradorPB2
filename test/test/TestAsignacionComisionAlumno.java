@@ -610,76 +610,205 @@ public class TestAsignacionComisionAlumno {
 		assertEquals(esperado, resultadoDeLaEjecucion);
 		assertEquals(cantidadEsperada, cantidadDelArray);
 	}
-	
+
 	@Test
-    public void queSePuedaObtenerNota() { // NOTA DE TIPO
-        // PREPARACION
-        String nombreMat = "PB2", nombreA = "Victoria", apellidoA = "Junco";
-        Integer idComision = 2900, codigoMat = 1231, idCiclo = 45, anioCiclo = 2023, mesInicioCiclo = 3,
-                diaInicioCiclo = 12, mesFinalCiclo = 12, diaFinalCiclo = 15, dniA = 45;
-        Turnos turno = Turnos.MAÑANA;
-        Dia dia = Dia.JUEVES;
-        Double resultadoDeLaEjecucion, valorEsperadoDeNota1 = 7.0;
-        ;
+	public void queSePuedaObtenerNota() { // NOTA DE TIPO
+		// PREPARACION
+		String nombreMat = "PB2", nombreA = "Victoria", apellidoA = "Junco";
+		Integer idComision = 2900, codigoMat = 1231, idCiclo = 45, anioCiclo = 2023, mesInicioCiclo = 3,
+				diaInicioCiclo = 12, mesFinalCiclo = 12, diaFinalCiclo = 15, dniA = 45;
+		Turnos turno = Turnos.MAÑANA;
+		Dia dia = Dia.JUEVES;
+		Double resultadoDeLaEjecucion, valorEsperadoDeNota1 = 7.0;
+		;
 
-        // EJECUCION
-        Alumno alumno = new Alumno(nombreA, apellidoA, dniA);
-        Materia materia = new Materia(nombreMat, codigoMat);
-        CicloLectivo ciclo = new CicloLectivo(idCiclo, anioCiclo, mesInicioCiclo, diaInicioCiclo, mesFinalCiclo,
-                diaFinalCiclo);
-        ciclo.ingresarFechaDeInscripcion(anioCiclo, 5, 30);
-        ciclo.ingresarFechaDeFinalizacionDeLaInscripcion(anioCiclo, 12, 23);
-        Comision comision = new Comision(idComision, materia, ciclo, turno, dia);
-        Aula aula = new Aula(100, 15);
-        aula.asignarCapacidad(50);
-        comision.ingresarAula(aula);
-        Nota nota = new Nota(TipoNota.PRIMERPARCIAL);
-        AsignacionComisionAlumno a = new AsignacionComisionAlumno(21313, alumno, comision);
-        a.inscribirAlumnoAComision(dniA, idComision);
-        a.ingresarNota(idComision, dniA, nota);
-        a.registrarNota(idComision, dniA, 7.0, TipoNota.PRIMERPARCIAL);
-        resultadoDeLaEjecucion = a.obtenerNota(dniA, codigoMat, TipoNota.PRIMERPARCIAL);
+		// EJECUCION
+		Alumno alumno = new Alumno(nombreA, apellidoA, dniA);
+		Materia materia = new Materia(nombreMat, codigoMat);
+		CicloLectivo ciclo = new CicloLectivo(idCiclo, anioCiclo, mesInicioCiclo, diaInicioCiclo, mesFinalCiclo,
+				diaFinalCiclo);
+		ciclo.ingresarFechaDeInscripcion(anioCiclo, 5, 30);
+		ciclo.ingresarFechaDeFinalizacionDeLaInscripcion(anioCiclo, 12, 23);
+		Comision comision = new Comision(idComision, materia, ciclo, turno, dia);
+		Aula aula = new Aula(100, 15);
+		aula.asignarCapacidad(50);
+		comision.ingresarAula(aula);
+		Nota nota = new Nota(TipoNota.PRIMERPARCIAL);
+		AsignacionComisionAlumno a = new AsignacionComisionAlumno(21313, alumno, comision);
+		a.inscribirAlumnoAComision(dniA, idComision);
+		a.ingresarNota(idComision, dniA, nota);
+		a.registrarNota(idComision, dniA, 7.0, TipoNota.PRIMERPARCIAL);
+		resultadoDeLaEjecucion = a.obtenerNota(dniA, codigoMat, TipoNota.PRIMERPARCIAL);
 
-        // VALIDACION
-        assertEquals(valorEsperadoDeNota1, resultadoDeLaEjecucion);
-    }
-@Test
-    public void queSePuedaCalcularPromedio() {
-        // PREPARACION
-        String nombreMat = "PB2", nombreA = "Victoria", apellidoA = "Junco";
-        Integer idComision = 2900, codigoMat = 1231, idCiclo = 45, anioCiclo = 2023, mesInicioCiclo = 3,
-                diaInicioCiclo = 12, mesFinalCiclo = 12, diaFinalCiclo = 15, dniA = 45;
-        Turnos turno = Turnos.MAÑANA;
-        Dia dia = Dia.JUEVES;
-        Double resultadoDeLaEjecucion;
+		// VALIDACION
+		assertEquals(valorEsperadoDeNota1, resultadoDeLaEjecucion);
+	}
 
-        // EJECUCION
-        Alumno alumno = new Alumno(nombreA, apellidoA, dniA);
-        Materia materia = new Materia(nombreMat, codigoMat);
-        CicloLectivo ciclo = new CicloLectivo(idCiclo, anioCiclo, mesInicioCiclo, diaInicioCiclo, mesFinalCiclo,
-                diaFinalCiclo);
-        ciclo.ingresarFechaDeInscripcion(anioCiclo, 5, 30);
-        ciclo.ingresarFechaDeFinalizacionDeLaInscripcion(anioCiclo, 12, 23);
-        Comision comision = new Comision(idComision, materia, ciclo, turno, dia);
-        Aula aula = new Aula(100, 15);
-        aula.asignarCapacidad(50);
-        comision.ingresarAula(aula);
-        Nota nota = new Nota(TipoNota.PRIMERPARCIAL);
-        Nota nota2 = new Nota(TipoNota.SEGUNDOPARCIAL);
-        Nota nota3 = new Nota(TipoNota.FINAL);
+	@Test
+	public void queSePuedaCalcularPromedio() {
+		// PREPARACION
+		String nombreMat = "PB2", nombreA = "Victoria", apellidoA = "Junco";
+		Integer idComision = 2900, codigoMat = 1231, idCiclo = 45, anioCiclo = 2023, mesInicioCiclo = 3,
+				diaInicioCiclo = 12, mesFinalCiclo = 12, diaFinalCiclo = 15, dniA = 45;
+		Turnos turno = Turnos.MAÑANA;
+		Dia dia = Dia.JUEVES;
+		Double resultadoDeLaEjecucion;
 
-        AsignacionComisionAlumno a = new AsignacionComisionAlumno(21313, alumno, comision);
-        a.inscribirAlumnoAComision(dniA, idComision);
-        a.ingresarNota(idComision, dniA, nota);
-        a.ingresarNota(idComision, dniA, nota2);
-        a.ingresarNota(idComision, dniA, nota3);
-        a.registrarNota(idComision, dniA, 7.0, TipoNota.PRIMERPARCIAL);
-        a.registrarNota(idComision, dniA, 7.0, TipoNota.SEGUNDOPARCIAL);
-        resultadoDeLaEjecucion = a.calcularPromedio(dniA);
-        Double valorEsperadoDelPromedio = 7.0;
+		// EJECUCION
+		Alumno alumno = new Alumno(nombreA, apellidoA, dniA);
+		Materia materia = new Materia(nombreMat, codigoMat);
+		CicloLectivo ciclo = new CicloLectivo(idCiclo, anioCiclo, mesInicioCiclo, diaInicioCiclo, mesFinalCiclo,
+				diaFinalCiclo);
+		ciclo.ingresarFechaDeInscripcion(anioCiclo, 5, 30);
+		ciclo.ingresarFechaDeFinalizacionDeLaInscripcion(anioCiclo, 12, 23);
+		Comision comision = new Comision(idComision, materia, ciclo, turno, dia);
+		Aula aula = new Aula(100, 15);
+		aula.asignarCapacidad(50);
+		comision.ingresarAula(aula);
+		Nota nota = new Nota(TipoNota.PRIMERPARCIAL);
+		Nota nota2 = new Nota(TipoNota.SEGUNDOPARCIAL);
+		Nota nota3 = new Nota(TipoNota.FINAL);
 
-        // VALIDACION
-        assertEquals(valorEsperadoDelPromedio, resultadoDeLaEjecucion);
-    }
+		AsignacionComisionAlumno a = new AsignacionComisionAlumno(21313, alumno, comision);
+		a.inscribirAlumnoAComision(dniA, idComision);
+		a.ingresarNota(idComision, dniA, nota);
+		a.ingresarNota(idComision, dniA, nota2);
+		a.ingresarNota(idComision, dniA, nota3);
+		a.registrarNota(idComision, dniA, 7.0, TipoNota.PRIMERPARCIAL);
+		a.registrarNota(idComision, dniA, 7.0, TipoNota.SEGUNDOPARCIAL);
+		resultadoDeLaEjecucion = a.calcularPromedio(dniA);
+		Double valorEsperadoDelPromedio = 7.0;
+
+		// VALIDACION
+		assertEquals(valorEsperadoDelPromedio, resultadoDeLaEjecucion);
+	}
+
+	@Test
+	public void queSePuedaCalcularPromedioTeniendoQueRecuperar() {
+		// PREPARACION
+		String nombreMat = "PB2", nombreA = "Victoria", apellidoA = "Junco";
+		Integer idComision = 2900, codigoMat = 1231, idCiclo = 45, anioCiclo = 2023, mesInicioCiclo = 3,
+				diaInicioCiclo = 12, mesFinalCiclo = 12, diaFinalCiclo = 15, dniA = 45;
+		Turnos turno = Turnos.MAÑANA;
+		Dia dia = Dia.JUEVES;
+		Double resultadoDeLaEjecucion;
+
+		// EJECUCION
+		Alumno alumno = new Alumno(nombreA, apellidoA, dniA);
+		Materia materia = new Materia(nombreMat, codigoMat);
+		CicloLectivo ciclo = new CicloLectivo(idCiclo, anioCiclo, mesInicioCiclo, diaInicioCiclo, mesFinalCiclo,
+				diaFinalCiclo);
+		ciclo.ingresarFechaDeInscripcion(anioCiclo, 5, 30);
+		ciclo.ingresarFechaDeFinalizacionDeLaInscripcion(anioCiclo, 12, 23);
+		Comision comision = new Comision(idComision, materia, ciclo, turno, dia);
+		Aula aula = new Aula(100, 15);
+		aula.asignarCapacidad(50);
+		comision.ingresarAula(aula);
+		Nota nota = new Nota(TipoNota.PRIMERPARCIAL);
+		Nota nota2 = new Nota(TipoNota.SEGUNDOPARCIAL);
+		Nota nota3 = new Nota(TipoNota.REC1PRIMER);
+		Nota nota4 = new Nota(TipoNota.FINAL);
+		AsignacionComisionAlumno a = new AsignacionComisionAlumno(21313, alumno, comision);
+		a.inscribirAlumnoAComision(dniA, idComision);
+		a.ingresarNota(idComision, dniA, nota);
+		a.ingresarNota(idComision, dniA, nota2);
+		a.ingresarNota(idComision, dniA, nota3);
+		a.ingresarNota(idComision, dniA, nota4);
+		a.registrarNota(idComision, dniA, 4.0, TipoNota.PRIMERPARCIAL);
+		a.registrarNota(idComision, dniA, 7.0, TipoNota.SEGUNDOPARCIAL);
+		a.registrarNota(idComision, dniA, 8.0, TipoNota.REC1PRIMER);
+		resultadoDeLaEjecucion = a.calcularPromedio(dniA);
+		Double valorEsperadoDelPromedio = 7.5;
+
+		// VALIDACION
+		assertEquals(valorEsperadoDelPromedio, resultadoDeLaEjecucion);
+	}
+
+	@Test
+	public void queSePuedaObtenerMateriasQueFaltanCursarParaUnAlumno() {
+		// PREPARACION
+		String nombreMat = "PB2", nombreA = "Victoria", apellidoA = "Junco";
+		Integer idComision = 2900, codigoMat = 1231, idCiclo = 45, anioCiclo = 2023, mesInicioCiclo = 3,
+				diaInicioCiclo = 12, mesFinalCiclo = 7, diaFinalCiclo = 15, dniA = 45325, cantidadEsperada = 2,
+				cantidadDelArray;
+		Turnos turno = Turnos.MAÑANA;
+		Dia dia = Dia.JUEVES;
+		ArrayList<Materia> resultadoDeLaEjecucion, esperado;
+
+		// EJECUCION
+		Materia materia = new Materia(nombreMat, codigoMat);
+		Materia faltante = new Materia("Pb1", 7897);
+		Materia faltante2 = new Materia("Informatica", 4564);
+		Alumno alumno = new Alumno(nombreA, apellidoA, dniA);
+		CicloLectivo ciclo = new CicloLectivo(idCiclo, anioCiclo, mesInicioCiclo, diaInicioCiclo, mesFinalCiclo,
+				diaFinalCiclo);
+		ciclo.ingresarFechaDeInscripcion(anioCiclo, 5, 20);
+		ciclo.ingresarFechaDeFinalizacionDeLaInscripcion(anioCiclo, 12, 22);
+		Comision comision = new Comision(idComision, materia, ciclo, turno, dia);
+		AsignacionComisionAlumno asig = new AsignacionComisionAlumno(15, alumno, comision);
+		alumno.asignarMateriaFaltanteParaCursar(faltante);
+		alumno.asignarMateriaFaltanteParaCursar(faltante2);
+		esperado = alumno.getMateriaQueFaltanCursar();
+		resultadoDeLaEjecucion = asig.obtenerMateriasQueFaltanCursarParaUnAlumno(dniA);
+		cantidadDelArray = alumno.getMateriaQueFaltanCursar().size();
+
+		// VALIDACION
+		assertEquals(esperado, resultadoDeLaEjecucion);
+		assertEquals(cantidadEsperada, cantidadDelArray);
+	}
+
+	@Test
+	public void queNoSePuedaObtenerMateriasQueFaltanCursarParaUnAlumnoPorqueNoLeFaltan() {
+		// PREPARACION
+		String nombreMat = "PB2", nombreA = "Victoria", apellidoA = "Junco";
+		Integer idComision = 2900, codigoMat = 1231, idCiclo = 45, anioCiclo = 2023, mesInicioCiclo = 3,
+				diaInicioCiclo = 12, mesFinalCiclo = 7, diaFinalCiclo = 15, dniA = 45325, cantidadEsperada = 0,
+				cantidadDelArray;
+		Turnos turno = Turnos.MAÑANA;
+		Dia dia = Dia.JUEVES;
+		ArrayList<Materia> resultadoDeLaEjecucion, esperado;
+
+		// EJECUCION
+		Materia materia = new Materia(nombreMat, codigoMat);
+		Alumno alumno = new Alumno(nombreA, apellidoA, dniA);
+		CicloLectivo ciclo = new CicloLectivo(idCiclo, anioCiclo, mesInicioCiclo, diaInicioCiclo, mesFinalCiclo,
+				diaFinalCiclo);
+		ciclo.ingresarFechaDeInscripcion(anioCiclo, 5, 20);
+		ciclo.ingresarFechaDeFinalizacionDeLaInscripcion(anioCiclo, 12, 22);
+		Comision comision = new Comision(idComision, materia, ciclo, turno, dia);
+		AsignacionComisionAlumno asig = new AsignacionComisionAlumno(15, alumno, comision);
+		esperado = alumno.getMateriaQueFaltanCursar();
+		resultadoDeLaEjecucion = asig.obtenerMateriasQueFaltanCursarParaUnAlumno(dniA);
+		cantidadDelArray = alumno.getMateriaQueFaltanCursar().size();
+
+		// VALIDACION
+		assertEquals(esperado, resultadoDeLaEjecucion);
+		assertEquals(cantidadEsperada, cantidadDelArray);
+	}
+
+	@Test
+	public void queLaValidacionFechasDeInscripcionEstePasadaDeTermino() {
+		// PREPARACION
+		String nombreMat = "PB2", nombreA = "Victoria", apellidoA = "Junco";
+		Integer idComision = 2900, codigoMat = 1231, idCiclo = 45, anioCiclo = 2023, mesInicioCiclo = 3,
+				diaInicioCiclo = 12, mesFinalCiclo = 7, diaFinalCiclo = 15, dniA = 45325;
+		Turnos turno = Turnos.MAÑANA;
+		Dia dia = Dia.JUEVES;
+		Boolean resultadoDeLaEjecucion;
+
+		// EJECUCION
+		Materia materia = new Materia(nombreMat, codigoMat);
+		Alumno alumno = new Alumno(nombreA, apellidoA, dniA);
+		CicloLectivo ciclo = new CicloLectivo(idCiclo, anioCiclo, mesInicioCiclo, diaInicioCiclo, mesFinalCiclo,
+				diaFinalCiclo);
+		ciclo.ingresarFechaDeInscripcion(anioCiclo, 9, 10);
+		ciclo.ingresarFechaDeFinalizacionDeLaInscripcion(anioCiclo, 9, 20);
+		Comision comision = new Comision(idComision, materia, ciclo, turno, dia);
+		AsignacionComisionAlumno asig = new AsignacionComisionAlumno(15, alumno, comision);
+		resultadoDeLaEjecucion = asig.validarFechaDeInscripcion(idComision);
+
+		// VALIDACION
+		assertFalse(resultadoDeLaEjecucion); // FECHA ACTUAL PASADA DE TERMINO
+	}
 
 }
