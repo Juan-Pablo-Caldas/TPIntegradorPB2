@@ -392,7 +392,110 @@ public class TestAsignacionComisionAlumno {
 		// VALIDACION
 		assertFalse(resultadoDeLaEjecucion);
 		assertEquals(numeroEsperado, numeroDeNotas);
-
 	}
+	
+	@Test
+    public void queSePuedaEvaluarUnParcial() {
+        // PREPARACION
+        String nombreMat = "PB2", nombreA = "Victoria", apellidoA = "Junco";
+        Integer idComision = 2900, codigoMat = 1231, idCiclo = 45, anioCiclo = 2023, mesInicioCiclo = 3,
+                diaInicioCiclo = 12, mesFinalCiclo = 12, diaFinalCiclo = 15, dniA = 45;
+        Turnos turno = Turnos.MAÑANA;
+        Dia dia = Dia.JUEVES;
+        Boolean resultadoDeLaEjecucion;
+
+        // EJECUCION
+
+        Alumno alumno = new Alumno(nombreA, apellidoA, dniA);
+        Materia materia = new Materia(nombreMat, codigoMat);
+        CicloLectivo ciclo = new CicloLectivo(idCiclo, anioCiclo, mesInicioCiclo, diaInicioCiclo, mesFinalCiclo,
+                diaFinalCiclo);
+        ciclo.ingresarFechaDeInscripcion(anioCiclo, 5, 30);
+        ciclo.ingresarFechaDeFinalizacionDeLaInscripcion(anioCiclo, 12, 23);
+Comision comision = new Comision(idComision, materia, ciclo, turno, dia);
+
+        Aula aula = new Aula(100, 14);
+        aula.asignarCapacidad(50);
+
+        comision.ingresarAula(aula);
+        Nota nota = new Nota(TipoNota.PRIMERPARCIAL);
+        Nota nota2 = new Nota(TipoNota.SEGUNDOPARCIAL);
+        Nota nota3 = new Nota(TipoNota.REC1PRIMER);
+        Nota nota4 = new Nota(TipoNota.REC2PARCIAL);
+
+        AsignacionComisionAlumno a = new AsignacionComisionAlumno(21313, alumno, comision);
+        a.inscribirAlumnoAComision(dniA, idComision);
+
+        a.ingresarNota(idComision, dniA, nota);
+        a.ingresarNota(idComision, dniA, nota2);
+        a.ingresarNota(idComision, dniA, nota3);
+        a.ingresarNota(idComision, dniA, nota4);
+
+        resultadoDeLaEjecucion = a.registrarNota(idComision, dniA, 7.0, TipoNota.PRIMERPARCIAL);
+        resultadoDeLaEjecucion = a.registrarNota(idComision, dniA, 5.0, TipoNota.SEGUNDOPARCIAL);
+
+        Double valorEsperadoDeNota1 = 7.0;
+        Double valorEsperadoDeNota2 = 5.0;
+
+        Double valorDeLaNota1 = a.getNotas().get(0).getValorDeNota();
+        Double valorDeLaNota2 = a.getNotas().get(1).getValorDeNota();
+        // VALIDACION
+        assertTrue(resultadoDeLaEjecucion);
+        assertEquals(valorEsperadoDeNota1, valorDeLaNota1);
+        assertEquals(valorEsperadoDeNota2, valorDeLaNota2);
+
+    }
+
+	@Test
+    public void queNoSePuedaEvaluarEl2doRecuperatorioSiElPrimeroYaSeEvaluo() {
+        // PREPARACION
+        String nombreMat = "PB2", nombreA = "Victoria", apellidoA = "Junco";
+        Integer idComision = 2900, codigoMat = 1231, idCiclo = 45, anioCiclo = 2023, mesInicioCiclo = 3,
+                diaInicioCiclo = 12, mesFinalCiclo = 12, diaFinalCiclo = 15, dniA = 45;
+        Turnos turno = Turnos.MAÑANA;
+        Dia dia = Dia.JUEVES;
+        Boolean resultadoDeLaEjecucion;
+
+        // EJECUCION
+
+        Alumno alumno = new Alumno(nombreA, apellidoA, dniA);
+        Materia materia = new Materia(nombreMat, codigoMat);
+        CicloLectivo ciclo = new CicloLectivo(idCiclo, anioCiclo, mesInicioCiclo, diaInicioCiclo, mesFinalCiclo,
+                diaFinalCiclo);
+        ciclo.ingresarFechaDeInscripcion(anioCiclo, 5, 30);
+        ciclo.ingresarFechaDeFinalizacionDeLaInscripcion(anioCiclo, 12, 23);
+        Comision comision = new Comision(idComision, materia, ciclo, turno, dia);
+
+        Aula aula = new Aula(100, 14);
+        aula.asignarCapacidad(50);
+
+        comision.ingresarAula(aula);
+
+        Nota nota = new Nota(TipoNota.PRIMERPARCIAL);
+        Nota nota2 = new Nota(TipoNota.SEGUNDOPARCIAL);
+        Nota nota3 = new Nota(TipoNota.REC1PRIMER);
+        Nota nota4 = new Nota(TipoNota.REC2PARCIAL);
+
+        AsignacionComisionAlumno a = new AsignacionComisionAlumno(21313, alumno, comision);
+        a.inscribirAlumnoAComision(dniA, idComision);
+
+        a.ingresarNota(idComision, dniA, nota);
+        a.ingresarNota(idComision, dniA, nota2);
+        a.ingresarNota(idComision, dniA, nota3);
+        a.ingresarNota(idComision, dniA, nota4);
+
+        a.registrarNota(idComision, dniA, 5.0, TipoNota.PRIMERPARCIAL);
+
+        a.registrarNota(idComision, dniA, 7.0, TipoNota.REC1PRIMER);
+        resultadoDeLaEjecucion = a.registrarNota(idComision, dniA, 5.0, TipoNota.REC2PARCIAL);
+
+        Double valorEsperadoDeNota4 = 0.0;
+
+        Double valorDeLaNota3 = a.getNotas().get(2).getValorDeNota();
+        Double valorDeLaNota4 = a.getNotas().get(4).getValorDeNota();
+        // VALIDACION
+        assertFalse(resultadoDeLaEjecucion);
+        assertEquals(valorEsperadoDeNota4, valorDeLaNota4);
+    }
 
 }
