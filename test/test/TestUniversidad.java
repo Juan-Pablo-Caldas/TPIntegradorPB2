@@ -198,5 +198,74 @@ public class TestUniversidad {
 		assertFalse(ingresoLaComision);
 		assertEquals(esperado, unlam.getCantidadDeComisiones());
 	}
+	
+	@Test
+    public void queSePuedaIngresarAula() {
+        // PREPARACION
+
+        String nombre = "UNLAM";
+        Integer codigoAula = 40;
+        Boolean ingresoElAula;
+
+        // EJECUCION
+
+        Universidad unlam = new Universidad(nombre);
+
+        Aula aula = new Aula(20, codigoAula);
+
+        ingresoElAula = unlam.ingresarAula(aula);
+
+        // VALIDACION
+
+        assertTrue(ingresoElAula);
+    }
+@Test
+    public void queSePuedaIngresarUnCicloLectivo() {
+
+        // PREPARACION
+
+        String nombre = "unlam";
+        Integer id = 20, anio = 2023, mesInicio = 4, diaInicio = 12, mesFinalizacion = 8, diaFinalizacion = 27;
+        Boolean resultado;
+
+        // EJECUCION
+
+        CicloLectivo ciclo = new CicloLectivo(id, anio, mesInicio, diaInicio, mesFinalizacion, diaFinalizacion);
+        ciclo.ingresarFechaDeInscripcion(anio, 5, 10);
+        ciclo.ingresarFechaDeFinalizacionDeLaInscripcion(anio, 12, 28);
+
+        Universidad unlam = new Universidad(nombre);
+        resultado = unlam.ingresarCicloLectivo(ciclo);
+
+        // VALIDACION
+
+        assertTrue(resultado);
+
+    }
+@Test
+    public void queNoSePuedaIngresarCiclosLectivosConMismoIDyMismosRangosDeFechas() {
+        // PREPARACION
+        String nombre = "unlam";
+        Integer id = 20, numeroEsperado = 1, anio = 2023, mesInicio = 4, diaInicio = 12, mesFinalizacion = 8,
+                diaFinalizacion = 27;
+        Boolean resultado;
+
+        // EJECUCION
+
+        CicloLectivo ciclo = new CicloLectivo(id, anio, mesInicio, diaInicio, mesFinalizacion, diaFinalizacion);
+
+        CicloLectivo ciclo2 = new CicloLectivo(id, anio, mesInicio, diaInicio, mesFinalizacion, diaFinalizacion);
+
+        Universidad unlam = new Universidad(nombre);
+        resultado = unlam.ingresarCicloLectivo(ciclo);
+        resultado = unlam.ingresarCicloLectivo(ciclo2);
+
+        // VALIDACION
+
+        assertFalse(resultado);
+
+        assertEquals(numeroEsperado, unlam.getCantidadDeCiclosLectivos());
+
+    }
 
 }
