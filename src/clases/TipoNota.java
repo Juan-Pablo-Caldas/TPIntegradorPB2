@@ -1,0 +1,4 @@
+package clases;
+public enum TipoNota {
+	PRIMERPARCIAL, SEGUNDOPARCIAL, REC1PRIMER, REC2PARCIAL, FINAL; 
+}
