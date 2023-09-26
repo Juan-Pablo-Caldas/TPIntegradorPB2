@@ -198,74 +198,147 @@ public class TestUniversidad {
 		assertFalse(ingresoLaComision);
 		assertEquals(esperado, unlam.getCantidadDeComisiones());
 	}
-	
+
 	@Test
-    public void queSePuedaIngresarAula() {
-        // PREPARACION
+	public void queSePuedaIngresarAula() {
+		// PREPARACION
 
-        String nombre = "UNLAM";
-        Integer codigoAula = 40;
-        Boolean ingresoElAula;
+		String nombre = "UNLAM";
+		Integer codigoAula = 40;
+		Boolean ingresoElAula;
 
-        // EJECUCION
+		// EJECUCION
 
-        Universidad unlam = new Universidad(nombre);
+		Universidad unlam = new Universidad(nombre);
 
-        Aula aula = new Aula(20, codigoAula);
+		Aula aula = new Aula(20, codigoAula);
 
-        ingresoElAula = unlam.ingresarAula(aula);
+		ingresoElAula = unlam.ingresarAula(aula);
 
-        // VALIDACION
+		// VALIDACION
 
-        assertTrue(ingresoElAula);
-    }
-@Test
-    public void queSePuedaIngresarUnCicloLectivo() {
+		assertTrue(ingresoElAula);
+	}
 
-        // PREPARACION
+	@Test
+	public void queSePuedaIngresarUnCicloLectivo() {
 
-        String nombre = "unlam";
-        Integer id = 20, anio = 2023, mesInicio = 4, diaInicio = 12, mesFinalizacion = 8, diaFinalizacion = 27;
-        Boolean resultado;
+		// PREPARACION
 
-        // EJECUCION
+		String nombre = "unlam";
+		Integer id = 20, anio = 2023, mesInicio = 4, diaInicio = 12, mesFinalizacion = 8, diaFinalizacion = 27;
+		Boolean resultado;
 
-        CicloLectivo ciclo = new CicloLectivo(id, anio, mesInicio, diaInicio, mesFinalizacion, diaFinalizacion);
-        ciclo.ingresarFechaDeInscripcion(anio, 5, 10);
-        ciclo.ingresarFechaDeFinalizacionDeLaInscripcion(anio, 12, 28);
+		// EJECUCION
 
-        Universidad unlam = new Universidad(nombre);
-        resultado = unlam.ingresarCicloLectivo(ciclo);
+		CicloLectivo ciclo = new CicloLectivo(id, anio, mesInicio, diaInicio, mesFinalizacion, diaFinalizacion);
+		ciclo.ingresarFechaDeInscripcion(anio, 5, 10);
+		ciclo.ingresarFechaDeFinalizacionDeLaInscripcion(anio, 12, 28);
 
-        // VALIDACION
+		Universidad unlam = new Universidad(nombre);
+		resultado = unlam.ingresarCicloLectivo(ciclo);
 
-        assertTrue(resultado);
+		// VALIDACION
 
-    }
-@Test
-    public void queNoSePuedaIngresarCiclosLectivosConMismoIDyMismosRangosDeFechas() {
-        // PREPARACION
-        String nombre = "unlam";
-        Integer id = 20, numeroEsperado = 1, anio = 2023, mesInicio = 4, diaInicio = 12, mesFinalizacion = 8,
-                diaFinalizacion = 27;
-        Boolean resultado;
+		assertTrue(resultado);
 
-        // EJECUCION
+	}
 
-        CicloLectivo ciclo = new CicloLectivo(id, anio, mesInicio, diaInicio, mesFinalizacion, diaFinalizacion);
+	@Test
+	public void queNoSePuedaIngresarCiclosLectivosConMismoIDyMismosRangosDeFechas() {
+		// PREPARACION
+		String nombre = "unlam";
+		Integer id = 20, numeroEsperado = 1, anio = 2023, mesInicio = 4, diaInicio = 12, mesFinalizacion = 8,
+				diaFinalizacion = 27;
+		Boolean resultado;
 
-        CicloLectivo ciclo2 = new CicloLectivo(id, anio, mesInicio, diaInicio, mesFinalizacion, diaFinalizacion);
+		// EJECUCION
 
-        Universidad unlam = new Universidad(nombre);
-        resultado = unlam.ingresarCicloLectivo(ciclo);
-        resultado = unlam.ingresarCicloLectivo(ciclo2);
+		CicloLectivo ciclo = new CicloLectivo(id, anio, mesInicio, diaInicio, mesFinalizacion, diaFinalizacion);
 
-        // VALIDACION
+		CicloLectivo ciclo2 = new CicloLectivo(id, anio, mesInicio, diaInicio, mesFinalizacion, diaFinalizacion);
 
-        assertFalse(resultado);
+		Universidad unlam = new Universidad(nombre);
+		resultado = unlam.ingresarCicloLectivo(ciclo);
+		resultado = unlam.ingresarCicloLectivo(ciclo2);
 
-        assertEquals(numeroEsperado, unlam.getCantidadDeCiclosLectivos());
+		// VALIDACION
 
-    }
+		assertFalse(resultado);
+
+		assertEquals(numeroEsperado, unlam.getCantidadDeCiclosLectivos());
+
+	}
+
+	@Test
+	public void queSePuedaAsignarAulaAComision() { // NO CREO QUE SE PONGA ACA
+
+		// PREPARACION
+
+		String nombre = "unlam", nombreMateria = "PB2";
+		Integer idComision = 4, dniProfe = 444, codigoMateria = 7, id = 20, anio = 2023, mesInicio = 4, diaInicio = 12,
+				mesFinalizacion = 8, diaFinalizacion = 27;
+
+		Boolean respuesta;
+
+		// EJECUCION
+
+		Universidad universidad = new Universidad(nombre);
+		Profe profesor = new Profe("Andy", "A", dniProfe);
+		Materia materia = new Materia(nombreMateria, codigoMateria);
+		CicloLectivo ciclo = new CicloLectivo(id, anio, mesInicio, diaInicio, mesFinalizacion, diaFinalizacion);
+		Turnos turno = Turnos.MAÑANA;
+		Dia dia = Dia.MIERCOLES;
+		Comision comision = new Comision(idComision, materia, ciclo, turno, dia);
+		Aula aula = new Aula(100, id);
+		aula.asignarCapacidad(50);
+
+		universidad.ingresarComision(comision);
+		universidad.ingresarProfesor(profesor);
+
+		respuesta = universidad.asignarAulaAlaComision(idComision, dniProfe, aula);
+
+		// VALIDACION
+
+		assertTrue(respuesta);
+
+	}
+
+	@Test
+	public void queSePuedaAgregarUnaMateriaCorrelativa() {
+		// PREPARACION
+		String nombreUni = "UnLam", nombreCorrelativa = "PB1", nombreMateria = "PB2";
+		Integer idCorrelativa = 4564, idMateria = 1231;
+		Boolean resultadoDeLaEjecucion;
+
+		// EJECUCION
+		Materia materia = new Materia(nombreMateria, idMateria);
+		Materia correlativa = new Materia(nombreMateria, idCorrelativa);
+		Universidad uni = new Universidad(nombreUni);
+		uni.ingresarMateria(materia);
+		resultadoDeLaEjecucion = uni.agregarMateriaCorrelativa(correlativa, idMateria);
+
+		// VALIDACION
+		assertTrue(resultadoDeLaEjecucion);
+	}
+
+	@Test
+	public void queSePuedaAsignarUnaMateriaCorrelativa() {
+		// PREPARACION
+		String nombreMat = "PB2", nombreUni = "UnLam", nombreCorrelativa = "PB1";
+		Integer idMateria = 1231, idCorrelativa = 4564;
+		Boolean resultadoDeLaEjecucion;
+
+		// EJECUCION
+		Materia materia = new Materia(nombreMat, idMateria);
+		Materia correlativa = new Materia(nombreMat, idCorrelativa);
+		Universidad uni = new Universidad(nombreUni);
+		uni.ingresarMateria(materia);
+		uni.agregarMateriaCorrelativa(correlativa, idMateria);
+		resultadoDeLaEjecucion = uni.agregarCorrelatividad(idMateria, idCorrelativa);
+
+		// VALIDACION
+		assertTrue(resultadoDeLaEjecucion);
+	}
 
 }
