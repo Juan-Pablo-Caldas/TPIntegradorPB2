@@ -247,69 +247,152 @@ public class TestAsignacionComisionAlumno {
 		// VALIDACION
 		assertFalse(resultadoDeLaEjecucion);
 	}
-	
+
 	@Test
-    public void queSePuedaValidarQueElIdDeLasMateriasAprobadasDelAlumnoSeanDistintasALasDeLaComision() {
-        // PREPARACION
-        String nombreMat = "PB2", nombreA = "Victoria", apellidoA = "Junco";
-        Integer idComision = 2900, codigoMat = 1231, idCiclo = 45, anioCiclo = 2023, mesInicioCiclo = 3,
-                diaInicioCiclo = 12, mesFinalCiclo = 7, diaFinalCiclo = 15, dniA = 45;
-        Turnos turno = Turnos.MAÑANA;
-        Dia dia = Dia.JUEVES;
-        Boolean resultadoDeLaEjecucion;
+	public void queSePuedaValidarQueElIdDeLasMateriasAprobadasDelAlumnoSeanDistintasALasDeLaComision() {
+		// PREPARACION
+		String nombreMat = "PB2", nombreA = "Victoria", apellidoA = "Junco";
+		Integer idComision = 2900, codigoMat = 1231, idCiclo = 45, anioCiclo = 2023, mesInicioCiclo = 3,
+				diaInicioCiclo = 12, mesFinalCiclo = 7, diaFinalCiclo = 15, dniA = 45;
+		Turnos turno = Turnos.MAÑANA;
+		Dia dia = Dia.JUEVES;
+		Boolean resultadoDeLaEjecucion;
 
-        // EJECUCION
+		// EJECUCION
 
-        Alumno alumno = new Alumno(nombreA, apellidoA, dniA);
-        Materia materia = new Materia(nombreMat, codigoMat);
-        Materia materiaAprobada = new Materia("Pb1", 789);
-        CicloLectivo ciclo = new CicloLectivo(idCiclo, anioCiclo, mesInicioCiclo, diaInicioCiclo, mesFinalCiclo,
-                diaFinalCiclo);
-        ciclo.ingresarFechaDeInscripcion(anioCiclo, 5, 30);
-        ciclo.ingresarFechaDeFinalizacionDeLaInscripcion(anioCiclo, 12, 23);
-        Comision comision = new Comision(idComision, materia, ciclo, turno, dia);
-        Aula aula = new Aula(100, 15);
-        aula.asignarCapacidad(50);
+		Alumno alumno = new Alumno(nombreA, apellidoA, dniA);
+		Materia materia = new Materia(nombreMat, codigoMat);
+		Materia materiaAprobada = new Materia("Pb1", 789);
+		CicloLectivo ciclo = new CicloLectivo(idCiclo, anioCiclo, mesInicioCiclo, diaInicioCiclo, mesFinalCiclo,
+				diaFinalCiclo);
+		ciclo.ingresarFechaDeInscripcion(anioCiclo, 5, 30);
+		ciclo.ingresarFechaDeFinalizacionDeLaInscripcion(anioCiclo, 12, 23);
+		Comision comision = new Comision(idComision, materia, ciclo, turno, dia);
+		Aula aula = new Aula(100, 15);
+		aula.asignarCapacidad(50);
 
-        comision.ingresarAula(aula);
-        alumno.asignarMateriasAprobadas(materiaAprobada);
-        AsignacionComisionAlumno a = new AsignacionComisionAlumno(123123, alumno, comision);
-        resultadoDeLaEjecucion = a
-                .validarQueElIdDeLasMateriasAprobadasDelAlumnoSeanDistintasALasDeLaComision(idComision, dniA);
+		comision.ingresarAula(aula);
+		alumno.asignarMateriasAprobadas(materiaAprobada);
+		AsignacionComisionAlumno a = new AsignacionComisionAlumno(123123, alumno, comision);
+		resultadoDeLaEjecucion = a
+				.validarQueElIdDeLasMateriasAprobadasDelAlumnoSeanDistintasALasDeLaComision(idComision, dniA);
 
-        // VALIDACION
-        assertTrue(resultadoDeLaEjecucion);
-    }
-@Test
-    public void queSePuedaValidarQueElTurnoYDiaSeanNoSeanIguales() {
-        // PREPARACION
-        String nombreMat = "PB2", nombreA = "Victoria", apellidoA = "Junco";
-        Integer idComision = 2900, codigoMat = 1231, idCiclo = 45, anioCiclo = 2023, mesInicioCiclo = 3,
-                diaInicioCiclo = 12, mesFinalCiclo = 7, diaFinalCiclo = 15, dniA = 45;
-        Turnos turno = Turnos.MAÑANA;
-        Dia dia = Dia.JUEVES;
-        Boolean resultadoDeLaEjecucion;
+		// VALIDACION
+		assertTrue(resultadoDeLaEjecucion);
+	}
 
-        // EJECUCION
+	@Test
+	public void queSePuedaValidarQueElTurnoYDiaSeanNoSeanIguales() {
+		// PREPARACION
+		String nombreMat = "PB2", nombreA = "Victoria", apellidoA = "Junco";
+		Integer idComision = 2900, codigoMat = 1231, idCiclo = 45, anioCiclo = 2023, mesInicioCiclo = 3,
+				diaInicioCiclo = 12, mesFinalCiclo = 7, diaFinalCiclo = 15, dniA = 45;
+		Turnos turno = Turnos.MAÑANA;
+		Dia dia = Dia.JUEVES;
+		Boolean resultadoDeLaEjecucion;
 
-        Alumno alumno = new Alumno(nombreA, apellidoA, dniA);
-        Materia materia = new Materia(nombreMat, codigoMat);
-        CicloLectivo ciclo = new CicloLectivo(idCiclo, anioCiclo, mesInicioCiclo, diaInicioCiclo, mesFinalCiclo,
-                diaFinalCiclo);
-        ciclo.ingresarFechaDeInscripcion(anioCiclo, 5, 30);
-        ciclo.ingresarFechaDeFinalizacionDeLaInscripcion(anioCiclo, 12, 23);
-        Comision comision = new Comision(idComision, materia, ciclo, turno, dia);
-        Comision queYaTiene = new Comision(3900, materia, ciclo, Turnos.NOCHE, Dia.SABADO);
-        Aula aula = new Aula(100, 14);
-        aula.asignarCapacidad(50);
+		// EJECUCION
 
-        comision.ingresarAula(aula);
-        alumno.asignarComision(queYaTiene);
-        AsignacionComisionAlumno a = new AsignacionComisionAlumno(21313, alumno, comision);
-        resultadoDeLaEjecucion = a.validarQueElTurnoYDiaSeanNoSeanIguales(idComision, dniA);
+		Alumno alumno = new Alumno(nombreA, apellidoA, dniA);
+		Materia materia = new Materia(nombreMat, codigoMat);
+		CicloLectivo ciclo = new CicloLectivo(idCiclo, anioCiclo, mesInicioCiclo, diaInicioCiclo, mesFinalCiclo,
+				diaFinalCiclo);
+		ciclo.ingresarFechaDeInscripcion(anioCiclo, 5, 30);
+		ciclo.ingresarFechaDeFinalizacionDeLaInscripcion(anioCiclo, 12, 23);
+		Comision comision = new Comision(idComision, materia, ciclo, turno, dia);
+		Comision queYaTiene = new Comision(3900, materia, ciclo, Turnos.NOCHE, Dia.SABADO);
+		Aula aula = new Aula(100, 14);
+		aula.asignarCapacidad(50);
 
-        // VALIDACION
-        assertTrue(resultadoDeLaEjecucion);
-    }
+		comision.ingresarAula(aula);
+		alumno.asignarComision(queYaTiene);
+		AsignacionComisionAlumno a = new AsignacionComisionAlumno(21313, alumno, comision);
+		resultadoDeLaEjecucion = a.validarQueElTurnoYDiaSeanNoSeanIguales(idComision, dniA);
+
+		// VALIDACION
+		assertTrue(resultadoDeLaEjecucion);
+	}
+
+	@Test
+	public void queSePuedaAsignarUnaNotaDePrimerParcial() {
+		// PREPARACION
+		String nombreMat = "PB2", nombreA = "Victoria", apellidoA = "Junco";
+		Integer idComision = 2900, codigoMat = 1231, idCiclo = 45, anioCiclo = 2023, mesInicioCiclo = 3,
+				diaInicioCiclo = 12, mesFinalCiclo = 12, diaFinalCiclo = 15, dniA = 45;
+		Turnos turno = Turnos.MAÑANA;
+		Dia dia = Dia.JUEVES;
+		Boolean resultadoDeLaEjecucion;
+
+		// EJECUCION
+
+		Alumno alumno = new Alumno(nombreA, apellidoA, dniA);
+		Materia materia = new Materia(nombreMat, codigoMat);
+		CicloLectivo ciclo = new CicloLectivo(idCiclo, anioCiclo, mesInicioCiclo, diaInicioCiclo, mesFinalCiclo,
+				diaFinalCiclo);
+		ciclo.ingresarFechaDeInscripcion(anioCiclo, 5, 30);
+		ciclo.ingresarFechaDeFinalizacionDeLaInscripcion(anioCiclo, 12, 23);
+
+		Comision comision = new Comision(idComision, materia, ciclo, turno, dia);
+
+		Aula aula = new Aula(100, 14);
+		aula.asignarCapacidad(50);
+
+		comision.ingresarAula(aula);
+		Nota nota = new Nota(TipoNota.PRIMERPARCIAL);
+
+		AsignacionComisionAlumno a = new AsignacionComisionAlumno(21313, alumno, comision);
+		a.inscribirAlumnoAComision(dniA, idComision);
+
+		resultadoDeLaEjecucion = a.ingresarNota(idComision, dniA, nota);
+
+		// VALIDACION
+
+		assertTrue(resultadoDeLaEjecucion);
+
+	}
+
+	@Test
+	public void queNoSePuedaAsignarUnaNotaDePrimerParcialSiYaExiste() {
+		// PREPARACION
+		String nombreMat = "PB2", nombreA = "Victoria", apellidoA = "Junco";
+		Integer idComision = 2900, codigoMat = 1231, idCiclo = 45, anioCiclo = 2023, mesInicioCiclo = 3,
+				diaInicioCiclo = 12, mesFinalCiclo = 7, diaFinalCiclo = 15, dniA = 45, numeroEsperado = 1;
+		Turnos turno = Turnos.MAÑANA;
+		Dia dia = Dia.JUEVES;
+		Boolean resultadoDeLaEjecucion;
+
+		// EJECUCION
+
+		Alumno alumno = new Alumno(nombreA, apellidoA, dniA);
+		Materia materia = new Materia(nombreMat, codigoMat);
+
+		CicloLectivo ciclo = new CicloLectivo(idCiclo, anioCiclo, mesInicioCiclo, diaInicioCiclo, mesFinalCiclo,
+				diaFinalCiclo);
+		ciclo.ingresarFechaDeInscripcion(anioCiclo, 5, 30);
+		ciclo.ingresarFechaDeFinalizacionDeLaInscripcion(anioCiclo, 12, 23);
+
+		Comision comision = new Comision(idComision, materia, ciclo, turno, dia);
+
+		Aula aula = new Aula(100, 14);
+		aula.asignarCapacidad(50);
+
+		comision.ingresarAula(aula);
+
+		Nota nota = new Nota(TipoNota.PRIMERPARCIAL);
+		Nota nota2 = new Nota(TipoNota.PRIMERPARCIAL);
+
+		AsignacionComisionAlumno a = new AsignacionComisionAlumno(21313, alumno, comision);
+		a.inscribirAlumnoAComision(dniA, idComision);
+
+		a.ingresarNota(idComision, dniA, nota);
+		resultadoDeLaEjecucion = a.ingresarNota(idComision, dniA, nota2);
+
+		Integer numeroDeNotas = a.getNotas().size();
+
+		// VALIDACION
+		assertFalse(resultadoDeLaEjecucion);
+		assertEquals(numeroEsperado, numeroDeNotas);
+
+	}
 
 }
