@@ -340,67 +340,184 @@ public class TestUniversidad {
 		// VALIDACION
 		assertTrue(resultadoDeLaEjecucion);
 	}
-	
+
 	@Test
-    public void queSePuedaEliminarUnaMateriaCorrelativa() {
-        // PREPARACION
-        String nombreMat = "PB2", nombreUni = "UnLam", nombreCorrelativa = "PB1";
-        Integer idMateria = 1231, idCorrelativa = 4564;
-        Boolean resultadoDeLaEjecucion;
+	public void queSePuedaEliminarUnaMateriaCorrelativa() {
+		// PREPARACION
+		String nombreMat = "PB2", nombreUni = "UnLam", nombreCorrelativa = "PB1";
+		Integer idMateria = 1231, idCorrelativa = 4564;
+		Boolean resultadoDeLaEjecucion;
 
-        // EJECUCION
-        Materia materia = new Materia(nombreMat, idMateria);
-        Materia correlativa = new Materia(nombreMat, idCorrelativa);
-        Universidad uni = new Universidad(nombreUni);
-        uni.ingresarMateria(materia);
-        uni.agregarMateriaCorrelativa(correlativa, idMateria);
-        uni.agregarCorrelatividad(idMateria, idCorrelativa);
-        resultadoDeLaEjecucion = uni.eliminarCorrelativa(idMateria, idCorrelativa);
+		// EJECUCION
+		Materia materia = new Materia(nombreMat, idMateria);
+		Materia correlativa = new Materia(nombreMat, idCorrelativa);
+		Universidad uni = new Universidad(nombreUni);
+		uni.ingresarMateria(materia);
+		uni.agregarMateriaCorrelativa(correlativa, idMateria);
+		uni.agregarCorrelatividad(idMateria, idCorrelativa);
+		resultadoDeLaEjecucion = uni.eliminarCorrelativa(idMateria, idCorrelativa);
 
-        // VALIDACION
-        assertTrue(resultadoDeLaEjecucion);
-    }
-@Test
-    public void queSePuedaIngresarAsignacionComisionProfesor() {
-        // PREPARACION
-        String nombreP = "Andres", apellidoP = "Bogota", nombreM = "PB2", nombreUni = "UnLam";
-        Integer idAsignacion = 15, dniP = 4564, idM = 65;
-        Boolean resultadoDeLaEjecucion;
+		// VALIDACION
+		assertTrue(resultadoDeLaEjecucion);
+	}
 
-        // EJECUCION
-        Universidad uni = new Universidad(nombreUni);
-        Profe profesor = new Profe(nombreP, apellidoP, dniP);
-        Materia materia = new Materia(nombreM, idM);
-        CicloLectivo ciclo = new CicloLectivo(89, 2023, 5, 12, 12, 5);
-        Comision comision = new Comision(85, materia, ciclo, Turnos.MAÑANA, Dia.JUEVES);
-        AsignacionComisionProfe asig = new AsignacionComisionProfe(idAsignacion, profesor, comision);
-        resultadoDeLaEjecucion = uni.ingresarAsignacionDeProfesor(asig);
+	@Test
+	public void queSePuedaIngresarAsignacionComisionProfesor() {
+		// PREPARACION
+		String nombreP = "Andres", apellidoP = "Bogota", nombreM = "PB2", nombreUni = "UnLam";
+		Integer idAsignacion = 15, dniP = 4564, idM = 65;
+		Boolean resultadoDeLaEjecucion;
 
-        // VALIDACION
-        assertTrue(resultadoDeLaEjecucion);
-    }
-@Test
-    public void queSePuedaIngresarAsignacionComisionAlumno() {
-        // PREPARACION
-        String nombreMat = "PB2", nombreA = "Victoria", apellidoA = "Junco", nombreUni = "UnLam";
-        Integer idComision = 2900, codigoMat = 1231, idCiclo = 45, anioCiclo = 2023, mesInicioCiclo = 3,
-                diaInicioCiclo = 12, mesFinalCiclo = 7, diaFinalCiclo = 15, dniA = 45325;
-        Turnos turno = Turnos.MAÑANA;
-        Dia dia = Dia.JUEVES;
-        Boolean resultadoDeLaEjecucion;
+		// EJECUCION
+		Universidad uni = new Universidad(nombreUni);
+		Profe profesor = new Profe(nombreP, apellidoP, dniP);
+		Materia materia = new Materia(nombreM, idM);
+		CicloLectivo ciclo = new CicloLectivo(89, 2023, 5, 12, 12, 5);
+		Comision comision = new Comision(85, materia, ciclo, Turnos.MAÑANA, Dia.JUEVES);
+		AsignacionComisionProfe asig = new AsignacionComisionProfe(idAsignacion, profesor, comision);
+		resultadoDeLaEjecucion = uni.ingresarAsignacionDeProfesor(asig);
 
-        // EJECUCION
-        Universidad uni = new Universidad(nombreUni);
-        Materia materia = new Materia(nombreMat, codigoMat);
-        Alumno alumno = new Alumno(nombreA, apellidoA, dniA);
-        CicloLectivo ciclo = new CicloLectivo(idCiclo, anioCiclo, mesInicioCiclo, diaInicioCiclo, mesFinalCiclo,
-                diaFinalCiclo);
-        Comision comision = new Comision(idComision, materia, ciclo, turno, dia);
-        AsignacionComisionAlumno asig = new AsignacionComisionAlumno(15, alumno, comision);
-        resultadoDeLaEjecucion = uni.ingresarAsignacionDeAlumno(asig);
+		// VALIDACION
+		assertTrue(resultadoDeLaEjecucion);
+	}
 
-        // VALIDACION
-        assertTrue(resultadoDeLaEjecucion);
-    }
+	@Test
+	public void queSePuedaIngresarAsignacionComisionAlumno() {
+		// PREPARACION
+		String nombreMat = "PB2", nombreA = "Victoria", apellidoA = "Junco", nombreUni = "UnLam";
+		Integer idComision = 2900, codigoMat = 1231, idCiclo = 45, anioCiclo = 2023, mesInicioCiclo = 3,
+				diaInicioCiclo = 12, mesFinalCiclo = 7, diaFinalCiclo = 15, dniA = 45325;
+		Turnos turno = Turnos.MAÑANA;
+		Dia dia = Dia.JUEVES;
+		Boolean resultadoDeLaEjecucion;
+
+		// EJECUCION
+		Universidad uni = new Universidad(nombreUni);
+		Materia materia = new Materia(nombreMat, codigoMat);
+		Alumno alumno = new Alumno(nombreA, apellidoA, dniA);
+		CicloLectivo ciclo = new CicloLectivo(idCiclo, anioCiclo, mesInicioCiclo, diaInicioCiclo, mesFinalCiclo,
+				diaFinalCiclo);
+		Comision comision = new Comision(idComision, materia, ciclo, turno, dia);
+		AsignacionComisionAlumno asig = new AsignacionComisionAlumno(15, alumno, comision);
+		resultadoDeLaEjecucion = uni.ingresarAsignacionDeAlumno(asig);
+
+		// VALIDACION
+		assertTrue(resultadoDeLaEjecucion);
+	}
+
+	@Test
+	public void queSePuedaBuscarUnaMateriaPorId() {
+		// PREPARACION
+		String nombreUni = "UnLam", nombreMateria = "PB2";
+		Integer idMateria = 1231;
+		Materia resultadoDeLaEjecucion;
+
+		// EJECUCION
+		Materia materia = new Materia(nombreMateria, idMateria);
+		Universidad uni = new Universidad(nombreUni);
+		uni.ingresarMateria(materia);
+		resultadoDeLaEjecucion = uni.buscarMateriaPorId(idMateria);
+
+		// VALIDACION
+		assertEquals(materia, resultadoDeLaEjecucion);
+	}
+
+	@Test
+	public void queSePuedaBuscarUnaComisionDeUniversidad() {
+		// PREPARACION
+		String nombreMat = "PB2", nombreUni = "UnLam";
+		Integer idComision = 2900, codigoMat = 1231, idCiclo = 45, anioCiclo = 2023, mesInicioCiclo = 3,
+				diaInicioCiclo = 12, mesFinalCiclo = 7, diaFinalCiclo = 15;
+		Turnos turno = Turnos.MAÑANA;
+		Dia dia = Dia.JUEVES;
+		Comision resultadoDeLaEjecucion;
+
+		// EJECUCION
+		Universidad uni = new Universidad(nombreUni);
+		Materia materia = new Materia(nombreMat, codigoMat);
+		CicloLectivo ciclo = new CicloLectivo(idCiclo, anioCiclo, mesInicioCiclo, diaInicioCiclo, mesFinalCiclo,
+				diaFinalCiclo);
+		Comision comision = new Comision(idComision, materia, ciclo, turno, dia);
+		uni.ingresarComision(comision);
+		resultadoDeLaEjecucion = uni.buscarComisionPorID(idComision);
+
+		// VALIDACION
+		assertEquals(comision, resultadoDeLaEjecucion);
+	}
+
+	@Test
+	public void queSePuedaBuscarUnProfesorDeLaUniversidad() {
+		// PREPARACION
+		String nombreProf = "Andres", apellidoProf = "Borgeat", nombreUni = "UnLam";
+		Integer legajoProf = 456;
+		Profe resultadoDeLaEjecucion;
+
+		// EJECUCION
+		Universidad uni = new Universidad(nombreUni);
+		Profe profesor = new Profe(nombreProf, apellidoProf, legajoProf);
+		uni.ingresarProfesor(profesor);
+		resultadoDeLaEjecucion = uni.buscarProfePorDNI(legajoProf);
+
+		// VALIDACION
+		assertEquals(profesor, resultadoDeLaEjecucion);
+	}
+
+	@Test
+	public void queSePuedaAsignarProfesoresAComision() {
+		// PREPARACION
+		String nombreP = "Andres", apellidoP = "Bogota", nombreM = "PB2", nombreUni = "UnLam";
+		Integer idAsignacion = 15, capacidadMaximaAula = 100, idAula = 45, dniP = 4564, idM = 65, idCom = 85;
+		Boolean resultadodeLaEjecucion;
+
+		// EJECUCION
+		Universidad uni = new Universidad(nombreUni);
+		Profe profesor = new Profe(nombreP, apellidoP, dniP);
+		Materia materia = new Materia(nombreM, idM);
+		CicloLectivo ciclo = new CicloLectivo(89, 2023, 5, 12, 12, 5);
+		Comision comision = new Comision(idCom, materia, ciclo, Turnos.MAÑANA, Dia.JUEVES);
+		uni.ingresarProfesor(profesor);
+		uni.ingresarComision(comision);
+		Aula aula = new Aula(capacidadMaximaAula, idAula);
+		aula.asignarCapacidad(50);
+		comision.ingresarAula(aula);
+		AsignacionComisionProfe asig = new AsignacionComisionProfe(idAsignacion, uni.buscarProfePorDNI(dniP),
+				uni.buscarComisionPorID(idCom));
+		resultadodeLaEjecucion = asig.asignarProfesoresAComision(idCom, dniP);
+
+		// VALIDACION
+		assertTrue(resultadodeLaEjecucion);
+	}
+
+	@Test
+	public void queSePuedaInscribirUnAlumnoAComisionQueNoTengaMateriasAprobadasNiComisiones() {
+		// PREPARACION
+		String nombreMat = "PB2", nombreA = "Victoria", apellidoA = "Junco", nombreUni = "UnLam";
+		Integer idComision = 2900, codigoMat = 1231, idCiclo = 45, anioCiclo = 2023, mesInicioCiclo = 3,
+				diaInicioCiclo = 12, mesFinalCiclo = 12, diaFinalCiclo = 15, dniA = 45;
+		Turnos turno = Turnos.MAÑANA;
+		Dia dia = Dia.JUEVES;
+		Boolean resultadoDeLaEjecucion;
+
+		// EJECUCION
+		Universidad uni = new Universidad(nombreUni);
+		Alumno alumno = new Alumno(nombreA, apellidoA, dniA);
+		Materia materia = new Materia(nombreMat, codigoMat);
+		CicloLectivo ciclo = new CicloLectivo(idCiclo, anioCiclo, mesInicioCiclo, diaInicioCiclo, mesFinalCiclo,
+				diaFinalCiclo);
+		ciclo.ingresarFechaDeInscripcion(anioCiclo, 5, 20);
+		ciclo.ingresarFechaDeFinalizacionDeLaInscripcion(anioCiclo, 12, 22);
+		Comision comision = new Comision(idComision, materia, ciclo, turno, dia);
+		uni.ingresarAlumno(alumno);
+		uni.ingresarComision(comision);
+		AsignacionComisionAlumno asig = new AsignacionComisionAlumno(15, uni.buscarAlumnoPorDni(dniA),
+				uni.buscarComisionPorID(idComision));
+		Aula aula = new Aula(100, 15);
+		aula.asignarCapacidad(50);
+		comision.ingresarAula(aula);
+		resultadoDeLaEjecucion = asig.inscribirAlumnoAComision(dniA, idComision);
+
+		// VALIDACION
+		assertTrue(resultadoDeLaEjecucion);
+	}
 
 }
