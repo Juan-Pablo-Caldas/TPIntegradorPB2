@@ -33,12 +33,10 @@ public class TestMateria {
 
         // EJECUCION
         Materia materia = new Materia(nombre, id);
-
         resultado = materia.asignarCorrelativa(id, id2);
 
         // VALIDACION
         assertFalse(resultado);
     }
-
 
 }
